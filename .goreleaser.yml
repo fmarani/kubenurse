@@ -7,6 +7,7 @@ builds:
       - linux
     goarch:
       - amd64
+      - arm64
     main: main.go
     binary: kubenurse
     id: kubenurse
@@ -18,7 +19,19 @@ dockers:
     image_templates:
       - "postfinance/kubenurse:latest"
       - "postfinance/kubenurse:{{ .Tag }}"
+      - "postfinance/kubenurse:{{ .Tag }}-amd64"
     dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/amd64"
+  - goos: linux
+    goarch: arm64
+    ids:
+      - kubenurse
+    image_templates:
+      - "postfinance/kubenurse:{{ .Tag }}-arm64"
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/arm64"
 checksum:
   name_template: 'checksums.txt'
 snapshot:
